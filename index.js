@@ -2,6 +2,7 @@ const express = require("express")
 const mongoose= require("mongoose")
 const app = express()
 
+app.use(express.json())
 // Mongodb connnection function
 
 const mongoconnect = async () => {
@@ -32,12 +33,25 @@ app.get("/",async (req,res) => {
 // all todo route
 
 app.get("/todo",async (req,res) => {
-    res.send("All todos");
+    const allTodo =  await Todo.find()
+    res.json({
+    "todo":allTodo
+    });
 })
+
 
 // new todo
 app.post("/todo/new",async (req,res) => {
-    res.send("New todo");
+    const {name,description} = req.body
+    const saveToTodo = new Todo({
+        "name":name,
+        "description":description
+    })
+    await saveToTodo.save()
+    res.json({
+        "name":name,
+        "description":description
+    });
 })
 
 //  single todo with  id
