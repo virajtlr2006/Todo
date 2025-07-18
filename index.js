@@ -57,8 +57,12 @@ app.post("/todo/new",async (req,res) => {
 
 
 //Delete todo
-app.get("/todo/delete",async (req,res) => {
-    res.send("Delete todo");
+app.get("/todo/delete/:id",async (req,res) => {
+    const{id} = req.params
+    const deletedTodo = await Todo.findByIdAndDelete(id)
+    res.json({
+        "message":"Deleted todo successfully"
+    });
 })
 
 //  single todo with  id
