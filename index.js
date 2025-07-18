@@ -54,14 +54,21 @@ app.post("/todo/new",async (req,res) => {
     });
 })
 
-//  single todo with  id
+
 
 //Delete todo
 app.get("/todo/delete",async (req,res) => {
     res.send("Delete todo");
 })
 
+//  single todo with  id
 app.get("/todo/:id",async (req,res) => {
-    res.send("Single todo");
+    const {id} = req.params
+    const singleTodo = await Todo.findById(id)
+    res.json({
+        "todo":singleTodo
+    });
+
 })
+
 
